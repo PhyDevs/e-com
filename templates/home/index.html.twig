@@ -1,0 +1,110 @@
+{% extends 'shared/header.html.twig' %}
+
+{% block title %}E-Com Home{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">Punny headline</h1>
+            <p class="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple’s marketing pages.</p>
+            <a class="btn btn-outline-secondary" id="productBtn" href="#products">Brows Products</a>
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="container alert alert-success text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div id="products" class="container-fluid mt-2 p-5">
+        <div class="row">
+        {% for product in products %}
+            <div class="col-sm-4">
+                <div class="item--card text-center">
+                    <h2>{{ product.name }}</h2>
+                    <div class="title">{{ product.category.name }}</div>
+                    <div class="desc">{{ product.description }}</div>
+                    {% if(product.image) %}
+                        <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.name }}" class="shadow-sm mx-auto" />
+                    {% else %}
+                        <div class="bg-light shadow-sm mx-auto" style="width: 90%; height: 300px; margin: 1.4rem 0; border-radius: 4px;"></div>
+                    {% endif %}
+                    <div class="actions">
+                        <a href="{{ path('add_order', {id: product.id}) }}" class="btn btn-success">Order Now </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <h5>E - Com</h5>
+                    <small class="d-block mb-3 text-muted">© 2019</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Features</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Cool stuff</a></li>
+                        <li><a class="text-muted" href="#">Random feature</a></li>
+                        <li><a class="text-muted" href="#">Team feature</a></li>
+                        <li><a class="text-muted" href="#">Stuff for developers</a></li>
+                        <li><a class="text-muted" href="#">Another one</a></li>
+                        <li><a class="text-muted" href="#">Last time</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Resource</a></li>
+                        <li><a class="text-muted" href="#">Resource name</a></li>
+                        <li><a class="text-muted" href="#">Another resource</a></li>
+                        <li><a class="text-muted" href="#">Final resource</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Business</a></li>
+                        <li><a class="text-muted" href="#">Education</a></li>
+                        <li><a class="text-muted" href="#">Government</a></li>
+                        <li><a class="text-muted" href="#">Gaming</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>About</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Team</a></li>
+                        <li><a class="text-muted" href="#">Locations</a></li>
+                        <li><a class="text-muted" href="#">Privacy</a></li>
+                        <li><a class="text-muted" href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            "use strict";
+
+            $('#productBtn').on('click', function (e) {
+                e.preventDefault();
+                $('html').animate({
+                    scrollTop: $('#products').offset().top
+                }, 500);
+            })
+        })
+    </script>
+{% endblock %}
